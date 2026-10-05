@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KRYSYS — Periodic Table, Crystals & Geodes Catalog</title>
+<meta name="description" content="All 83 stable periodic-table elements for sale + 290+ crystals and geodes. Wholesale-sourced, +10% markup, ships worldwide." />
+<meta property="og:title" content="KRYSYS — Periodic Table, Crystals & Geodes Catalog" />
+<meta property="og:description" content="83 elements, 290+ crystals, geodes. Wholesale prices +10%. World-wide shipping." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://krysys-shop.vercel.app/catalog" />
+<link rel="icon" href="https://krysys-shop.vercel.app/favicon.ico" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #0a0a0a; color: #f4f4f5; line-height: 1.5; }
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid #27272a; padding: 1rem 1.5rem; }
+  .nav-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: 0.15em; background: linear-gradient(135deg, #06b6d4, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .nav-links { display: flex; gap: 1.25rem; }
+  .nav-links a { color: #a1a1aa; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #06b6d4; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .hero { text-align: center; padding: 3rem 1rem 2rem; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; }
+  .hero p { font-size: 1.1rem; color: #a1a1aa; max-width: 700px; margin: 0 auto 0.5rem; }
+  .hero .meta { font-size: 0.9rem; color: #71717a; margin-top: 1rem; }
+  .filters { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0; padding: 1rem; background: #18181b; border: 1px solid #27272a; border-radius: 12px; }
+  .search { flex: 1 1 300px; min-width: 200px; padding: 0.75rem 1rem; border: 1px solid #27272a; background: #0a0a0a; color: #f4f4f5; border-radius: 8px; font-size: 1rem; }
+  .filter-btn { padding: 0.6rem 1.1rem; background: #27272a; color: #f4f4f5; border: 1px solid transparent; border-radius: 999px; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
+  .filter-btn.active { background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: #fff; }
+  .filter-btn:hover { transform: translateY(-1px); }
+  .stats { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 1.5rem 0; }
+  .stat { background: #18181b; border: 1px solid #27272a; padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.9rem; }
+  .stat strong { color: #06b6d4; font-size: 1.2rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .card { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 1.1rem; transition: transform 0.2s, border-color 0.2s; }
+  .card:hover { transform: translateY(-2px); border-color: #06b6d4; }
+  .card .badge { display: inline-block; font-size: 0.7rem; padding: 0.2rem 0.55rem; border-radius: 999px; margin-bottom: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .badge.element { background: rgba(6, 180, 212, 0.15); color: #06b6d4; border: 1px solid rgba(6, 180, 212, 0.3); }
+  .badge.crystal { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); }
+  .badge.geode { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+  .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; color: #f4f4f5; }
+  .card .origin { font-size: 0.75rem; color: #71717a; margin-bottom: 0.6rem; }
+  .card .desc { font-size: 0.85rem; color: #a1a1aa; margin-bottom: 0.8rem; min-height: 2.5em; }
+  .card .footer { display: flex; align-items: center; justify-content: space-between; padding-top: 0.6rem; border-top: 1px solid #27272a; }
+  .card .price { font-size: 1.1rem; font-weight: 700; color: #06b6d4; }
+  .card .price small { font-size: 0.7rem; color: #71717a; font-weight: 400; text-decoration: line-through; }
+  .card .sku { font-size: 0.7rem; color: #52525b; font-family: ui-monospace, monospace; }
+  .empty { text-align: center; padding: 3rem; color: #71717a; }
+  .periodic { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; }
+  .periodic h2 { font-size: 1.1rem; margin-bottom: 0.75rem; color: #06b6d4; }
+  .periodic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 4px; }
+  .pel { background: #27272a; border: 1px solid transparent; padding: 0.4rem 0.3rem; border-radius: 6px; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .pel:hover { background: #06b6d4; color: #fff; }
+  .pel .sym { font-weight: 800; font-size: 1rem; }
+  .pel .num { font-size: 0.65rem; color: #71717a; }
+  .pel.unavailable { opacity: 0.3; cursor: not-allowed; }
+  .pel.unavailable:hover { background: #27272a; color: inherit; }
+  .footer { background: #18181b; border-top: 1px solid #27272a; padding: 2rem 1.5rem; text-align: center; color: #71717a; margin-top: 4rem; font-size: 0.85rem; }
+  .footer a { color: #06b6d4; text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .pill { display: inline-block; padding: 0.2rem 0.6rem; background: #27272a; border-radius: 999px; font-size: 0.75rem; color: #a1a1aa; margin-right: 0.4rem; }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">KRYSYS</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/catalog">Catalog</a>
+      <a href="/trade">Trade</a>
+      <a href="/journal">Journal</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>The Periodic Table Is the Inventory</h1>
+  <p>83 stable elements + 290+ crystals + 17 geodes. Wholesale-sourced. +10% markup. Worldwide shipping.</p>
+  <p class="meta">All prices in USD. Free shipping over $200. Element 92 (Uranium) requires photo ID.</p>
+</header>
+
+<div class="container">
+
+  <!-- Periodic table shortcut -->
+  <div class="periodic">
+    <h2>Jump to element →</h2>
+    <div class="periodic-grid" id="periodic-grid"></div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <input type="search" id="search" class="search" placeholder="Search by name, mineral, origin, SKU..." />
+    <button class="filter-btn active" data-cat="all">All</button>
+    <button class="filter-btn" data-cat="element">⚛️ Elements <span class="pill" id="count-element">0</span></button>
+    <button class="filter-btn" data-cat="crystal">💎 Crystals <span class="pill" id="count-crystal">0</span></button>
+    <button class="filter-btn" data-cat="geode">🪨 Geodes <span class="pill" id="count-geode">0</span></button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <span class="stat"><strong id="visible-count">0</strong> visible</span>
+    <span class="stat">Price range: <strong id="price-min">$0</strong> – <strong id="price-max">$0</strong></span>
+    <span class="stat">Sorted by <strong>price (low → high)</strong></span>
+  </div>
+
+  <!-- Catalog grid -->
+  <div id="grid" class="grid"></div>
+
+</div>
+
+<footer class="footer">
+  <p>KRYSYS — Crystalline Wholesale &middot; <a href="/">krysys-shop.vercel.app</a></p>
+  <p style="margin-top:0.5rem;">Bulk and B2B orders: wholesale@krysys-shop.vercel.app</p>
+</footer>
+
+<script>
+const API_BASE = 'https://krysys-shop.vercel.app';
+let allItems = [];
+let activeCategory = 'all';
+let activeQuery = '';
+
+// Build periodic table shortcuts (118 elements)
+const PERIODIC = [
+  [1,'H'],[2,'He'],[3,'Li'],[4,'Be'],[5,'B'],[6,'C'],[7,'N'],[8,'O'],[9,'F'],[10,'Ne'],
+  [11,'Na'],[12,'Mg'],[13,'Al'],[14,'Si'],[15,'P'],[16,'S'],[17,'Cl'],[18,'Ar'],[19,'K'],[20,'Ca'],
+  [21,'Sc'],[22,'Ti'],[23,'V'],[24,'Cr'],[25,'Mn'],[26,'Fe'],[27,'Co'],[28,'Ni'],[29,'Cu'],[30,'Zn'],
+  [31,'Ga'],[32,'Ge'],[33,'As'],[34,'Se'],[35,'Br'],[36,'Kr'],[37,'Rb'],[38,'Sr'],[39,'Y'],[40,'Zr'],
+  [41,'Nb'],[42,'Mo'],[43,'Tc'],[44,'Ru'],[45,'Rh'],[46,'Pd'],[47,'Ag'],[48,'Cd'],[49,'In'],[50,'Sn'],
+  [51,'Sb'],[52,'Te'],[53,'I'],[54,'Xe'],[55,'Cs'],[56,'Ba'],[57,'La'],[58,'Ce'],[59,'Pr'],[60,'Nd'],
+  [61,'Pm'],[62,'Sm'],[63,'Eu'],[64,'Gd'],[65,'Tb'],[66,'Dy'],[67,'Ho'],[68,'Er'],[69,'Tm'],[70,'Yb'],
+  [71,'Lu'],[72,'Hf'],[73,'Ta'],[74,'W'],[75,'Re'],[76,'Os'],[77,'Ir'],[78,'Pt'],[79,'Au'],[80,'Hg'],
+  [81,'Tl'],[82,'Pb'],[83,'Bi'],[84,'Po'],[85,'At'],[86,'Rn'],[87,'Fr'],[88,'Ra'],[89,'Ac'],[90,'Th'],
+  [91,'Pa'],[92,'U'],[93,'Np'],[94,'Pu'],[95,'Am'],[96,'Cm'],[97,'Bk'],[98,'Cf'],[99,'Es'],[100,'Fm'],
+  [101,'Md'],[102,'No'],[103,'Lr'],[104,'Rf'],[105,'Db'],[106,'Sg'],[107,'Bh'],[108,'Hs'],[109,'Mt'],[110,'Ds'],
+  [111,'Rg'],[112,'Cn'],[113,'Nh'],[114,'Fl'],[115,'Mc'],[116,'Lv'],[117,'Ts'],[118,'Og']
+];
+
+function buildPeriodicGrid() {
+  const grid = document.getElementById('periodic-grid');
+  // We don't know what's in stock yet; show all, grey out if not in catalog
+  const availableSymbols = new Set();
+  allItems.forEach(i => { if (i.is_element) availableSymbols.add(i.element); });
+  grid.innerHTML = PERIODIC.map(([n, s]) => {
+    const available = availableSymbols.has(s);
+    return `<div class="pel ${available ? '' : 'unavailable'}" data-symbol="${s}">
+      <div class="num">${n}</div>
+      <div class="sym">${s}</div>
+    </div>`;
+  }).join('');
+  grid.querySelectorAll('.pel:not(.unavailable)').forEach(el => {
+    el.addEventListener('click', () => {
+      document.getElementById('search').value = el.dataset.symbol;
+      activeCategory = 'element';
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === 'element'));
+      doFilter();
+      document.getElementById('grid').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+}
+
+function doFilter() {
+  const q = activeQuery.toLowerCase();
+  let visible = allItems.filter(it => {
+    if (activeCategory !== 'all' && it.category !== activeCategory) return false;
+    if (q) {
+      const hay = `${it.name} ${it.description || ''} ${it.origin || ''} ${it.form || ''} ${it.sku}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('visible-count').textContent = visible.length;
+  if (visible.length) {
+    const prices = visible.map(v => v.customer_usd);
+    document.getElementById('price-min').textContent = '$' + Math.min(...prices).toFixed(2);
+    document.getElementById('price-max').textContent = '$' + Math.max(...prices).toFixed(2);
+  }
+
+  const grid = document.getElementById('grid');
+  if (!visible.length) {
+    grid.innerHTML = '<div class="empty">No items match.</div>';
+    return;
+  }
+  grid.innerHTML = visible.map(it => `
+    <div class="card">
+      <span class="badge ${it.category}">${it.category}${it.is_element ? ' · #' + it.atomic_number : ''}</span>
+      <h3>${escapeHtml(it.name)}</h3>
+      ${it.origin ? `<div class="origin">📍 ${escapeHtml(it.origin)}</div>` : ''}
+      ${it.form ? `<div class="origin">📦 ${escapeHtml(it.form)}</div>` : ''}
+      <p class="desc">${escapeHtml(it.description || '')}</p>
+      <div class="footer">
+        <span class="price">$${it.customer_usd.toFixed(2)} <small>$${it.wholesale_usd.toFixed(2)}</small></span>
+        <span class="sku">${escapeHtml(it.sku.slice(0, 20))}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(s) { return String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }
+
+async function load() {
+  try {
+    const res = await fetch(API_BASE + '/api/catalog');
+    if (!res.ok) throw new Error('API ' + res.status);
+    const data = await res.json();
+    allItems = data.items || [];
+    console.log('Loaded', allItems.length, 'items');
+  } catch (e) {
+    // Fallback: empty catalog with instructions to fetch from API
+    console.warn('Could not load catalog from API:', e.message);
+    allItems = [];
+    document.getElementById('grid').innerHTML = '<div class="empty">Catalog temporarily unavailable — try refreshing.</div>';
+  }
+  // Counts
+  const counts = { element: 0, crystal: 0, geode: 0 };
+  allItems.forEach(i => { counts[i.category] = (counts[i.category] || 0) + 1; });
+  document.getElementById('count-element').textContent = counts.element || 0;
+  document.getElementById('count-crystal').textContent = counts.crystal || 0;
+  document.getElementById('count-geode').textContent = counts.geode || 0;
+  buildPeriodicGrid();
+  doFilter();
+}
+
+document.querySelectorAll('.filter-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    activeCategory = b.dataset.cat;
+    document.querySelectorAll('.filter-btn').forEach(x => x.classList.toggle('active', x === b));
+    doFilter();
+  });
+});
+document.getElementById('search').addEventListener('input', (e) => {
+  activeQuery = e.target.value;
+  doFilter();
+});
+
+load();
+</script>
+</body>
+</html>
